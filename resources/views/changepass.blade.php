@@ -3,6 +3,8 @@
 @section('title', 'Change password')
 
 @section('content')
+  <script type="text/javascript" src="{{URL::asset('js/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+  <script type="text/javascript" src="{{URL::asset('js/plugins/jquery-validation/additional-methods.min.js')}}"></script>
   <style>
     footer.page-footer{
       margin-top: 33px;

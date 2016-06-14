@@ -38,9 +38,9 @@
                         <td><a id="view-{{$employee->id}}" href="#modalview" >{{$employee->name}}</a></td>
                         <td>
                         	@if($employee->photo == null)
-                        	<img src="{{URL::asset('images/avatar.png')}}" alt="" style="width:60px;display:block;margin:0 auto;height:60px"class="circle responsive-img valign profile-image">
+                        	<img src="{{URL::asset('images/avatar.png')}}" alt="" style="max-width:60px;display:block;margin:0 auto;height:60px"class="circle responsive-img valign profile-image">
                         	@else
-                        	<img src="{{url('getImage').'/'.$employee->photo}}" alt="" style="width:60px;display:block;margin:0 auto;height:60px"class="circle responsive-img valign profile-image">
+                        	<img src="{{url('getImage').'/'.$employee->photo}}" alt="" style="max-width:60px;display:block;margin:0 auto;height:60px"class="circle responsive-img valign profile-image">
                         	@endif
                         </td>
                    
@@ -64,7 +64,7 @@
             </table>
             <!-- Day la modal edit -->
             <div id="modaledit" class="modal">
-	            <form id="form-edit" class="validateEmpEdit" action="{{url('admin/employees/editEmployee')}}" method="post" enctype="multipart/form-data">
+	            <form id="form-edit" action="{{url('admin/employees/editEmployee')}}" method="post" enctype="multipart/form-data">
 	            <input type="hidden" value="{{ Session::token() }}" name="_token">
 	                <div class="modal-header">
 	                    <h5 class="breadcrumbs-title">Edit Employee</h5>
@@ -72,7 +72,7 @@
 	                <div class="modal-content">
 	                    <div class="row">
 	                    <div class="col s6 m6 l6">
-	                        <img id="edit-profile-photo" src="{{URL::asset('images/avatar.png')}}" alt="" style="width:250px;display:block;margin:0 auto;height:250px"class="circle responsive-img valign profile-image">
+	                        <img id="edit-profile-photo" src="{{URL::asset('images/avatar.png')}}" alt="" style="max-width:60%;display:block;margin:0 auto"class="circle responsive-img valign profile-image">
 	                        <div class="file-field input-field">
 	                          <div class="btn">
 	                            <span>File</span>
@@ -85,25 +85,21 @@
 	                    </div>
 	                    <div class="col s6 m6 l6">
 	                        <div class="input-field">
-	                        	<label for="name">Name</label>
-	                            <input id="edit-name" name="name-edit" type="text" class="validate" value="Quan Byn" data-error=".errorTxt1">
-	                            <div class="errorTxt1"></div>
+	                            <input id="edit-name" name="name-edit" type="text" class="validate" value="Quan Byn">
+	                            <label for="name">Name</label>
 	                        </div>
 
 	                        <div class="input-field">
-	                        	<label for="job">Job title</label>
-	                            <input id="edit-job" name="job-edit" type="text" class="validate" value="Sinh vien" data-error=".errorTxt2">
-	                            <div class="errorTxt2"></div>	                            
+	                            <input id="edit-job" name="job-edit" type="text" class="validate" value="Sinh vien">
+	                            <label for="job">Job title</label>
 	                        </div>
 	                        <div class="input-field">
-	                        	<label for="number">Cellphone</label>
-	                            <input id="edit-phone" name="phone-edit" type="number" class="validate" value="098746454" data-error=".errorTxt3">
-	                            <div class="errorTxt3"></div>
+	                            <input id="edit-phone" name="phone-edit" type="number" class="validate" value="098746454">
+	                            <label for="number">Cellphone</label>
 	                        </div>
 	                         <div class="input-field">
-	                         	<label for="email">Email</label>
-	                            <input id="edit-email" name="email-edit" type="email" class="validate" value="zzbynzz@gmail.com" data-error=".errorTxt4">
-	                            <div class="errorTxt4"></div>
+	                            <input id="edit-email" name="email-edit" type="email" class="validate" value="zzbynzz@gmail.com">
+	                            <label for="email">Email</label>
 	                        </div>
 	                        <div class="input-field">
 	                            <select name="department-edit">
@@ -120,7 +116,7 @@
 	                </div>
 	                <div class="modal-footer">
 	                    <a href="#" class="btn waves-effect waves-light red modal-action modal-close">Cancel</a>
-	                    <a href="#" style="margin-right:20px" id="editemp" class="btn waves-effect waves-light green modal-action modal-close"><input type="submit" value="Confirm"></a>
+	                    <a href="#" style="margin-right:20px" class="btn waves-effect waves-light green modal-action modal-close"><input type="submit" value="Confirm"></a>
 	                </div>
 	            </form>
             </div>
@@ -140,7 +136,7 @@
                     <h5 class="breadcrumbs-title">View Employee</h5>
                 </div>
                 <div class="modal-content">
-                    <img id="view-photo" src="{{URL::asset('images/avatar.png')}}" alt="" style="width:200px;display:block;margin:0 auto;height:200px"class="circle responsive-img valign profile-image">
+                    <img id="view-photo" src="{{URL::asset('images/avatar.png')}}" alt="" style="max-width:200px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">
                     <ul id="profile-page-about-details" class="collection z-depth-1">
                       <li class="collection-item">
                         <div class="row">
@@ -184,7 +180,7 @@
             @endif
             <div id="modaladd" class="modal">
 
-                <form id="form-add" class="validateEmpAdd" action="{{url('admin/employees/addEmployee')}}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">    
+                <form id="form-add" action="{{url('admin/employees/addEmployee')}}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">    
 	                <input type="hidden" value="{{ Session::token() }}" name="_token">
 	                <div class="modal-header">
 	                    <h5 class="breadcrumbs-title">Add Employee</h5>
@@ -193,7 +189,7 @@
 	                    <div class="row">
 	                    	               		
 		                    <div class="col s6 m6 l6">
-		                        <img id="photo-add" src="{{URL::asset('images/avatar.png')}}" alt="" style="width:250px;display:block;margin:0 auto;height:250px"class="circle responsive-img valign profile-image">
+		                        <img id="photo-add" src="{{URL::asset('images/avatar.png')}}" alt="" style="max-width:60%;display:block;margin:0 auto"class="circle responsive-img valign profile-image">
 		                        <div class="file-field input-field">
 		                          <div class="btn">
 		                            <span>File</span>
@@ -206,25 +202,21 @@
 		                    </div>
 		                    <div class="col s6 m6 l6">
 		                        <div class="input-field">
-		                        	<label for="name">Name</label>
-		                            <input name="name" id="name" type="text" class="validate" data-error=".errorTxt1">
-		                            <div class="errorTxt1"></div>
+		                            <input name="name" id="name" type="text" class="validate" value="">
+		                            <label for="name">Name</label>
 		                        </div>
 
 		                        <div class="input-field">
-		                        	<label for="job">Job title</label>
-		                            <input name="job" id="job" type="text" class="validate" data-error=".errorTxt2">
-		                            <div class="errorTxt2"></div>
+		                            <input name="job" id="job" type="text" class="validate" value="">
+		                            <label for="job">Job title</label>
 		                        </div>
 		                        <div class="input-field">
-		                        	<label for="number">Cellphone</label>
-		                            <input name="phone" id="phone" type="number" class="validate" data-error=".errorTxt3">
-		                            <div class="errorTxt3"></div>
+		                            <input name="phone" id="phone" type="number" class="validate" value="">
+		                            <label for="number">Cellphone</label>
 		                        </div>
 		                         <div class="input-field">
-		                         	<label for="email">Email</label>
-		                            <input name="email" id="email" type="email" class="validate" data-error=".errorTxt4">
-		                            <div class="errorTxt4"></div>
+		                            <input name="email" id="email" type="email" class="validate" value="">
+		                            <label for="email">Email</label>
 		                        </div>
 		                        <div class="input-field">
 		                            <select name="department">
@@ -243,7 +235,7 @@
 
 	                <div class="modal-footer">
 	                    <a href="#" class="btn waves-effect waves-light red modal-action modal-close">Cancel</a>
-	                   	<a href="#" style="margin-right:20px" id="addemp" class="btn waves-effect waves-light green modal-action modal-close"><input type="submit" value="Add Employee"></a>
+	                   	<a href="#" style="margin-right:20px" class="btn waves-effect waves-light green modal-action modal-close"><input type="submit" value="Add Employee"></a>
 	                </div>
                 </form>
             </div>
@@ -253,10 +245,11 @@
 <!--end container-->
 
 <!-- End main -->
-<script type="text/javascript" src="{{URL::asset('js/validate/validateform.js')}}"></script>
+
 <script>
 
 $(function(){
+	
 	$(document).ready(function() {
 	    document.getElementById("jimage").onchange = function () {
 	        var reader = new FileReader();
@@ -275,10 +268,6 @@ $(function(){
 	        };
 	        reader.readAsDataURL(this.files[0]);
 	    };
-	    $('input[type="submit"]').css("height","36px");
-	    $('input[type="submit"]').css("padding","0 2rem");
-	    $('#addemp').css("padding","0");
-	    $('#editemp').css("padding","0");
 	});
 
 	@foreach($employees as $employee)
@@ -354,7 +343,6 @@ $(function(){
 			.done(function(data){
 				Materialize.toast("Edit employee successful !",4000);
 				console.log(data);
-
 				if(data.photo != null){
 					photo = '<img src="{{url('getImage')."/"}}'+data.photo+'" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">'
 				}
@@ -395,38 +383,23 @@ $(function(){
 			contentType: false
 		})
 		.done(function(data){
-			if(data.error == true){
-				if(data.message.name != undefined){
-					Materialize.toast(data.message.name[0],4000);
-				}
-				if(data.message.job != undefined){
-					Materialize.toast(data.message.job[0],4000);
-				}
-				if(data.message.phone != undefined){
-					Materialize.toast(data.message.phone[0],4000);
-				}
-				if(data.message.email != undefined){
-					Materialize.toast(data.message.email[0],4000);
-				}
-			}else{
-				Materialize.toast("Add employee successful !",4000);
-				console.log(data.workfor);
-				if(data.photo != null){
-					photo = '<img src="{{url('getImage')."/"}}'+data.photo+'" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">'
-				}
-				else{
-					photo = '<img src="{{URL::asset('images/avatar.png')}}" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">'
-				}
-				
-				$('#data-table-simple').dataTable().fnAddData([
-					'<a id="view-'+data.id+'" href="#modalview" >'+data.name+'</a>',
-					photo,
-					data.workfor,
-					data.job_title,
-					data.email,
-					'<a id="delete-'+data.id+'" href="#modaldelete" style="margin-left:20px" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-action-delete"></i></a><a id="edit-'+data.id+'" href="#modaledit" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-image-edit"></i></a>'
-				]);
+			Materialize.toast("Add employee successful !",4000);
+			console.log(data.workfor);
+			if(data.photo != null){
+				photo = '<img src="{{url('getImage')."/"}}'+data.photo+'" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">'
 			}
+			else{
+				photo = '<img src="{{URL::asset('images/avatar.png')}}" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">'
+			}
+			
+			$('#data-table-simple').dataTable().fnAddData([
+				'<a id="view-'+data.id+'" href="#modalview" >'+data.name+'</a>',
+				photo,
+				data.workfor,
+				data.job_title,
+				data.email,
+				'<a id="delete-'+data.id+'" href="#modaldelete" style="margin-left:20px" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-action-delete"></i></a><a id="edit-'+data.id+'" href="#modaledit" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-image-edit"></i></a>'
+			]);	
 			
 		})
 		.fail(function(data){
@@ -437,4 +410,6 @@ $(function(){
 });
 
 </script>
+
+
 @endsection

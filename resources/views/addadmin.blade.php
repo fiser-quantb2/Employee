@@ -112,6 +112,8 @@
       $('#addadminactive').addClass('active');
     });
   </script>
+  <script type="text/javascript" src="{{URL::asset('js/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+  <script type="text/javascript" src="{{URL::asset('js/plugins/jquery-validation/additional-methods.min.js')}}"></script>
   <script type="text/javascript" src="{{URL::asset('js/validate/validateform.js')}}"></script>
   <script type="text/javascript" src="{{ URL::asset('js/ajax/admin-ajax.js') }}"></script>
 @endsection
