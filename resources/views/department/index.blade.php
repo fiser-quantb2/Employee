@@ -52,19 +52,21 @@
             </table>
             <!-- Day la modal edit -->
             <div id="modaledit" class="modal">
-            	<form id="form-edit" action="{{url('admin/departments/editDepartment')}}" method="post" enctype="multipart/form-data">
+            	<form id="form-edit" class="validateDepEdit" action="{{url('admin/departments/editDepartment')}}" method="post" enctype="multipart/form-data">
 				 	<input type="hidden" value="{{ Session::token() }}" name="_token">
 	                <div class="modal-header">
 	                    <h5 class="breadcrumbs-title">Edit Department</h5>
 	                </div>
 	                <div class="modal-content">
 	                    <div class="input-field">
-	                        <input id="edit-name" name="name-edit" type="text" class="validate" value="Quan Byn">
 	                        <label for="name">Name</label>
+	                        <input id="name" name="name" type="text" class="validate" value="Quan Byn" data-error=".errorTxt1">
+	                        <div class="errorTxt1"></div>
 	                    </div>
 	                    <div class="input-field">
-	                        <input id="edit-phone" name="phone-edit" type="number" class="validate" value="098746454">
+	                        <input id="phone" name="phone" type="number" class="validate" value="097874853" data-error=".errorTxt2">
 	                        <label for="teacher">Office phone</label>
+	                        <div class="errorTxt2"></div>
 	                    </div>
 	                    <div class="input-field">
 	                        <!-- chon 1 trong cac employee thuoc department do de lam manager -->
@@ -80,7 +82,7 @@
 	                </div>
 	                <div class="modal-footer">
 	                    <a href="#" class="btn waves-effect waves-light red modal-action modal-close">Cancel</a>
-	                    <a href="#" style="margin-right:20px" class="btn waves-effect waves-light green modal-action modal-close"><input type="submit" value="Confirm"></a>
+	                    <a href="#" id="editdep" style="margin-right:20px" class="btn waves-effect waves-light green modal-action modal-close"><input type="submit" value="Confirm"></a>
 	                </div>
 	            </form>
             </div>
@@ -140,19 +142,21 @@
         <div class="col s12 m12 l12">
             <a href="#modaladd" class="modal-trigger btn-floating btn-large waves-effect waves-light "><i class="mdi-content-add"></i></a>
             <div id="modaladd" class="modal">
-				 <form id="form-add" action="{{url('admin/departments/addDepartment')}}" method="post" enctype="multipart/form-data">
+				 <form id="form-add" class="validateDepAdd" action="{{url('admin/departments/addDepartment')}}" method="post" enctype="multipart/form-data">
 				 	<input type="hidden" value="{{ Session::token() }}" name="_token">
 	                <div class="modal-header">
 	                    <h5 class="breadcrumbs-title">Add Department</h5>
 	                </div>
 	                <div class="modal-content">
 	                    <div class="input-field">
-	                        <input id="name" name="name" type="text" class="validate">
-	                        <label for="name">Name</label>
+	                    	<label for="name">Name</label>
+	                        <input id="name" name="name" type="text" class="validate" data-error=".errorTxt1">
+	                        <div class="errorTxt1"></div>
 	                    </div>
 	                    <div class="input-field">
-	                        <input id="phone" name="phone" type="number" class="validate" >
+	                        <input id="phone" name="phone" type="number" class="validate" data-error=".errorTxt2">
 	                        <label for="teacher">Office phone</label>
+	                        <div class="errorTxt2"></div>
 	                    </div>
 	                    <div class="input-field">
 	                        <!-- chon 1 trong cac employee da co de lam manager -->
@@ -169,7 +173,7 @@
 	                </div>
 	                <div class="modal-footer">
 	                    <a href="#" class="btn waves-effect waves-light red modal-action modal-close">Cancel</a>
-	                    <a href="#" style="margin-right:20px" class="btn waves-effect waves-light green modal-action modal-close"><input type="submit" value="Add Department"></a>
+	                    <a href="#" id="adddep" style="margin-right:20px" class="btn waves-effect waves-light green modal-action modal-close"><input type="submit" value="Add Department"></a>
 	                </div>
 	            </form>
             </div>
@@ -177,9 +181,15 @@
     </div>
 </div>
 <!--end container-->
-
+<script type="text/javascript" src="{{URL::asset('js/validate/validateform.js')}}"></script>
 <script>
 $(function(){
+	$(document).ready(function(){
+		$('input[type="submit"]').css("height","36px");
+	    $('input[type="submit"]').css("padding","0 2rem");
+	    $('#adddep').css("padding","0");
+	    $('#editdep').css("padding","0");
+	});
 	$(document).on('submit', '#form-add', function(event) {
 		
 		//var formData = new FormData($(this));
@@ -191,14 +201,22 @@ $(function(){
 			//dataType: "json",
 		})
 		.done(function(data){
-			Materialize.toast("Add department successful !",4000);
-			$('#data-table-simple').dataTable().fnAddData([
-				'<a id="view-'+data.id+'" href="#modalview" >'+data.name+'</a>',
-				data.office_phone,
-				data.manager,
-				'<a id="delete-'+data.id+'" href="#modaldelete" style="margin-left:20px" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-action-delete"></i></a><a id="edit-'+data.id+'" href="#modaledit" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-image-edit"></i></a>'
-			]);	
-			
+			if(data.error == true){
+				if(data.message.name != undefined){
+					Materialize.toast(data.message.name[0],4000);
+				}
+				if(data.message.phone != undefined){
+					Materialize.toast(data.message.phone[0],4000);
+				}
+			}else{
+				Materialize.toast("Add department successful !",4000);
+				$('#data-table-simple').dataTable().fnAddData([
+					'<a id="view-'+data.id+'" href="#modalview" >'+data.name+'</a>',
+					data.office_phone,
+					data.manager,
+					'<a id="delete-'+data.id+'" href="#modaldelete" style="margin-left:20px" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-action-delete"></i></a><a id="edit-'+data.id+'" href="#modaledit" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-image-edit"></i></a>'
+				]);
+			}
 		})
 
 		.fail(function(data){
@@ -206,7 +224,6 @@ $(function(){
 		})
 	});
 
-	
 
 	@foreach($depts as $dept)
 		$('#data-table-simple').on('click', '#view-{{$dept->id}}', function(event) {
@@ -273,14 +290,18 @@ $(function(){
 					//dataType: "json",
 				})
 				.done(function(data){
-					Materialize.toast("Edit department successful !",4000);
-					console.log(data);
-					$('#data-table-simple').dataTable().fnUpdate([
-						'<a id="view-'+data.id+'" href="#modalview" >'+data.name+'</a>',
-						data.office_phone,
-						data.manager,
-						'<a id="delete-'+data.id+'" href="#modaldelete" style="margin-left:20px" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-action-delete"></i></a><a id="edit-'+data.id+'" href="#modaledit" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-image-edit"></i></a>'
-					], '#row-'+dataId);	
+					if(data.error == true){
+						Materialize.toast("Name or phone is required");
+					}else{
+						Materialize.toast("Edit department successful !",4000);
+						console.log(data);
+						$('#data-table-simple').dataTable().fnUpdate([
+							'<a id="view-'+data.id+'" href="#modalview" >'+data.name+'</a>',
+							data.office_phone,
+							data.manager,
+							'<a id="delete-'+data.id+'" href="#modaldelete" style="margin-left:20px" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-action-delete"></i></a><a id="edit-'+data.id+'" href="#modaledit" class="waves-effect waves-circle waves-light btn-floating secondary-content"><i class="mdi-image-edit"></i></a>'
+						], '#row-'+dataId);
+					}
 				})
 
 				.fail(function(data){

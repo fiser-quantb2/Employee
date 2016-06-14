@@ -22,6 +22,8 @@
     <!--DataTable JS -->
     <script type="text/javascript" src="{{ URL::asset('js/plugins/data-tables/js/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/plugins/data-tables/data-tables-script.js') }}"></script>
+    <script type="text/javascript" src="{{URL::asset('js/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('js/plugins/jquery-validation/additional-methods.min.js')}}"></script>
     <!--JS codes for plugin-->
     <script type="text/javascript" src="{{ URL::asset('js/plugins.min.js') }}"></script>
     <!--Custom JS Code-->
