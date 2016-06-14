@@ -8,16 +8,16 @@ use App\Http\Requests;
 use Validator;
 use Auth;
 use Illuminate\Support\MessageBag;
+use \App\Traits\CaptchaTrait;
+use Illuminate\Support\Facades\Input;
 
 class LoginController extends Controller
 {
+    use CaptchaTrait;
     public function getLogin() {
         if (Auth::check()) {
-            return redirect('admin');
+            return redirect('admin/employees');
         }else return view('login');
-    }
-    public function getActive($username){
-
     }
     public function postLogin(Request $request){
     	$rules = [
@@ -31,33 +31,23 @@ class LoginController extends Controller
     	];
     	$validator = Validator::make($request->all(),$rules,$messages);
     	if($validator->fails()){
-    		return response()->json([
-    			'error' => true,
-    			'message' => $validator->errors() 
-    		],200);
-    	}else{
+    		return redirect()->back()->withErrors($validator)->withInput();
+    	}/*else if($this->captchaCheck() == false){
+            $errors = new MessageBag(['errorcaptcha' => 'Wrong captcha!']);
+            return redirect()->back()->withInput()->withErrors($errors);
+        }*/else{
     		$username = $request->input('username');
     		$password = $request->input('password');
     		if(Auth::attempt(['username'=>$username, 'password'=>$password],$request->has('remember'))){
                 if(Auth::user()->active == 1){
-                    return response()->json([
-                        'error' => false,
-                        'message' => 'success'
-                    ],200);
+                    return redirect('admin/add');
                 }else{
-                    return response()->json([
-                        'error' => false,
-                        'message' => 'changepass'
-                    ],200);
+                    return redirect('admin/changepass');
                 }
-    			/*return redirect()->intended('/');*/
             }
             else {
     			$errors = new MessageBag(['errorlogin' => 'Username or password is incorrect']);
-    			return response()->json([
-    				'error' => true,
-    				'message' => $errors
-    			],200);
+    			return redirect()->back()->withInput()->withErrors($errors);
     		}
     	}
     }

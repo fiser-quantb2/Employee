@@ -2,3 +2,17 @@
 	position: fixed;
 	bottom : 0;
 }
+.input-field div.error{
+    position: relative;
+    top: -1rem;
+    left: 0rem;
+    font-size: 0.8rem;
+    color:#FF4081;
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+}
+nav ul.right li:hover{
+    background-color : rgba(0,0,0,0);
+}

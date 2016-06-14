@@ -1,50 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="msapplication-tap-highlight" content="no">
+    <meta name="description" content="Employee Directory is a project for Web Development subject">
+    <meta name="keywords" content="employee, employee directory, material design, reponsive">
     <meta name="csrf-token" content="{{csrf_token()}}">
+    <link rel="icon" href="{{ URL::asset('images/uet_logo.png') }}" sizes="32x32">
     <title>Employee Directory - @yield('title')</title>
-
-    <!-- Favicons-->
-    <link rel="icon" href="{{ URL::asset('images/favicon/favicon-32x32.png') }}" sizes="32x32">
-    <!-- Favicons-->
-    <link rel="apple-touch-icon-precomposed" href="{{ URL::asset('images/favicon/apple-touch-icon-152x152.png') }}">
-    <!-- For iPhone -->
-    <meta name="msapplication-TileColor" content="#00bcd4">
-    <meta name="msapplication-TileImage" content="{{ URL::asset('images/favicon/mstile-144x144.png') }}">
-    <!-- For Windows Phone -->
-    
-    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-    <link href="{{URL::asset('js/plugins/perfect-scrollbar/perfect-scrollbar.css')}}" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="{{URL::asset('js/plugins/data-tables/css/jquery.dataTables.min.css')}}" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- CORE CSS-->
-  
     <link href="{{ URL::asset('css/materialize.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="{{ URL::asset('css/style.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->    
+    <!-- DataTable CSS-->
+    <link href="{{ URL::asset('js/plugins/data-tables/css/jquery.dataTables.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection">    
     <link href="{{ URL::asset('css/custom/custom.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
-     <script type="text/javascript" src="{{ URL::asset('js/plugins/jquery-1.11.2.min.js') }}"></script>
-
-
-
+    <script type="text/javascript" src="{{ URL::asset('js/plugins/jquery-1.11.2.min.js') }}"></script>
     <!--materialize js-->
     <script type="text/javascript" src="{{ URL::asset('js/materialize.min.js') }}"></script>
-    <!--prism-->
-    <script type="text/javascript" src="{{ URL::asset('js/plugins/prism/prism.js') }}"></script>
-    <!--scrollbar-->
-    <script type="text/javascript" src="{{ URL::asset('js/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    
-    <!-- data-tables -->
-    <script type="text/javascript" src="{{URL::asset('js/plugins/data-tables/js/jquery.dataTables.min.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('js/plugins/data-tables/data-tables-script.js')}}"></script>
-
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <!--DataTable JS -->
+    <script type="text/javascript" src="{{ URL::asset('js/plugins/data-tables/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/plugins/data-tables/data-tables-script.js') }}"></script>
+    <!--JS codes for plugin-->
     <script type="text/javascript" src="{{ URL::asset('js/plugins.min.js') }}"></script>
-    <!--custom-script.js - Add your own theme custom JS-->
+    <!--Custom JS Code-->
     <script type="text/javascript" src="{{ URL::asset('js/custom-script.js') }}"></script>
 </head>
 <body>
@@ -55,9 +35,7 @@
         <div class="loader-section section-right"></div>
     </div>
     <!-- End Page Loading -->
-
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-
+    
     <!-- START HEADER -->
     <header id="header" class="page-topbar">
         <!-- start header nav-->
@@ -65,7 +43,18 @@
             <nav class="navbar-color">
                 <div class="nav-wrapper">
                     <ul class="left">                      
-                      <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="{{ URL::asset('images/materialize-logo.png')}}" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li>
+                      <li><h1 class="logo-wrapper"><a href="{{url('/')}}" class="brand-logo darken-1"><img src="{{URL::asset('images/EmployeeLogo.png')}}" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li>
+                    </ul>
+                    <div class="header-search-wrapper hide-on-med-and-down">
+                        <i class="mdi-action-search"></i>
+                        <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Employee Directory"/>
+                    </div>
+                    <ul class="right hide-on-med-and-down">
+                        @if(!Auth::check())
+                        <li>
+                            <a href="{{url('login')}}" class="btn waves-effect waves-light teal">Login</a>
+                        </li>
+                        @endif
                     </ul>
                 </div>
             </nav>
@@ -74,20 +63,17 @@
     </header>
     <!-- END HEADER -->
 
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-
     <!-- START MAIN -->
     <div id="main">
         <!-- START WRAPPER -->
         <div class="wrapper">
-
             <!-- START LEFT SIDEBAR NAV-->
             <aside id="left-sidebar-nav">
                 <ul id="slide-out" class="side-nav fixed leftside-navigation">
                 <li class="user-details cyan darken-2">
                 <div class="row">
                     <div class="col col s4 m4 l4">
-                        <img src="{{ URL::asset('images/avatar.png') }}" alt="" class="circle responsive-img valign profile-image">
+                        <img src="{{ URL::asset('images/avatar.jpg') }}" alt="" class="circle responsive-img valign profile-image">
                     </div>
                     <div class="col col s8 m8 l8">
                         <ul id="profile-dropdown" class="dropdown-content">
@@ -96,23 +82,47 @@
                         </ul>
                         @if( Auth::check() )
                         <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">{{ Auth::user()->username }}<i class="mdi-navigation-arrow-drop-down right"></i></a>
-                        <p class="user-roal">Administration</p>
+                        <p class="user-roal">Administrator</p>
                         @else
-                        <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">Guest<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                        <a class="btn-flat waves-effect waves-light white-text profile-btn" href="#">Guest
+                        </a>
                         <p class="user-roal">Guest</p>
                         @endif    
                     </div>
                 </div>
                 </li>
-                <li class="bold"><a href="{{url('admin/employees')}}" class="waves-effect waves-cyan"><i class="mdi-action-accessibility"></i> Employee</a>
-                </li>
+                @if(Auth::check())
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
-                        <li class="bold"><a href="{{url('admin')}}" class="waves-effect waves-cyan"><i class="mdi-social-group"></i> Administration</a>
+                        <li class="bold"><a id="adminactive" class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-view-carousel"></i> Administration</a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li id="addadminactive"><a href="{{url('admin/add')}}"><i class="mdi-content-add-circle"></i>Add admin</a>
+                                    </li>
+                                    <li id="changepassactive"><a href="{{url('admin/changepass')}}"><i class="mdi-action-track-changes"></i>Change pass</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </li>
-                <li class="bold"><a href="{{url('admin/departments')}}" class="waves-effect waves-cyan"><i class="mdi-action-home"></i> Departments </a>
+                @endif
+                <li class="bold"><a
+                @if(Auth::check())
+                href="{{url('admin/employees')}}"
+                @else
+                href="{{url('employees')}}"
+                @endif
+                class="waves-effect waves-cyan"><i class="mdi-action-accessibility"></i> Employee</a>
+                </li>
+                <li class="bold"><a
+                @if(Auth::check())
+                href="{{url('admin/departments')}}"
+                @else
+                href="{{url('deparments')}}"
+                @endif
+                class="waves-effect waves-cyan"><i class="mdi-action-home"></i> Departments </a>
+                <li class="bold"><a href="{{url('contact')}}" class="waves-effect waves-cyan"><i class="mdi-communication-phone"></i> Contact </a>
                 </li>
                 <li class="li-hover">
                     <div class="row">
@@ -128,24 +138,17 @@
             </aside>
             <!-- END LEFT SIDEBAR NAV-->
 
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
-
             <!-- START CONTENT -->
             <section id="content">
-
                 <!--start container-->
                 @yield('content')
                 <!--end container-->
             </section>
             <!-- END CONTENT -->
-
         </div>
         <!-- END WRAPPER -->
-
     </div>
     <!-- END MAIN -->
-
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
 
     <!-- START FOOTER -->
     <footer class="page-footer">
@@ -158,6 +161,4 @@
     </footer>
     <!-- END FOOTER -->
 </body>
-
-
 </html>

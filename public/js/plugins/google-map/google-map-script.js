@@ -1,9 +1,9 @@
 $(function() {
       // Google Maps  
       $('#map-canvas').addClass('loading');    
-      var latlng = new google.maps.LatLng(40.6700, -73.9400); // Set your Lat. Log. New York
+      var latlng = new google.maps.LatLng(21.036717, 105.782984); // Set your Lat. Log. New York
       var settings = {
-          zoom: 10,
+          zoom: 16,
           center: latlng,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           mapTypeControl: false,
@@ -37,7 +37,7 @@ $(function() {
           new google.maps.Point(18,52)// Position of the marker 
       );
 
-      var companyPos = new google.maps.LatLng(40.6700, -73.9400);
+      var companyPos = new google.maps.LatLng(21.036717, 105.782984);
 
       var companyMarker = new google.maps.Marker({
           position: companyPos,

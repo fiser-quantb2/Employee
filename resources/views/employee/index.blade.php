@@ -28,7 +28,6 @@
                 	@foreach($employees as $employee)
                     <tr id="row-{{$employee->id}}">
                         <td><a id="view-{{$employee->id}}" href="#modalview" >{{$employee->name}}</a></td>
-
                         <td>
                         	@if($employee->photo == null)
                         	<img src="{{URL::asset('images/avatar.png')}}" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">
@@ -41,6 +40,7 @@
                 
                         <td>{{$employee->job_title}}</td>
                         <td>{{$employee->email}}</td>
+                        @if(Auth::check())
                         <td>
                             <a id="delete-{{$employee->id}}" href="#modaldelete" style="margin-left:20px" class="waves-effect waves-circle waves-light btn-floating secondary-content" data-id="{{$employee->id}}">
                                 <i class="mdi-action-delete"></i>
@@ -49,6 +49,7 @@
                                 <i class="mdi-image-edit"></i>
                             </a>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -166,10 +167,12 @@
             </div>
         </div>
         <div class="col s12 m12 l12">
+        	@if(Auth::check())
             <a href="#modaladd" class="modal-trigger btn-floating btn-large waves-effect waves-light "><i class="mdi-content-add"></i></a>
+            @endif
             <div id="modaladd" class="modal">
 
-                <form id="form-add" action="{{url('admin/employees/addEmployee')}}" method="post" enctype="multipart/form-data">    
+                <form id="form-add" action="{{url('admin/employees/addEmployee')}}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">    
 	                <input type="hidden" value="{{ Session::token() }}" name="_token">
 	                <div class="modal-header">
 	                    <h5 class="breadcrumbs-title">Add Employee</h5>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
 use App\Http\Requests;
 use App\Department;
 use App\Employee;
@@ -22,82 +22,83 @@ class DeptController extends Controller
     }
 
     public function editDepartment(Request $request, $id){
-    	
-    	$rules = [
-    		'name-edit' => 'required|min:6',
-    		'phone-edit' => 'required',
-    	];
+    	if(Auth::check()){
+        	$rules = [
+        		'name-edit' => 'required|min:6',
+        		'phone-edit' => 'required',
+        	];
 
-    	$messages = [
-    		'name-edit.required' => 'Name is required',
-    		'name-edit.min' => 'Name is least 6 characters',
-    		'phone-edit' => 'Phone is required',
-    	];
-    	$validator = Validator::make($request->all(),$rules,$messages);
+        	$messages = [
+        		'name-edit.required' => 'Name is required',
+        		'name-edit.min' => 'Name is least 6 characters',
+        		'phone-edit' => 'Phone is required',
+        	];
+        	$validator = Validator::make($request->all(),$rules,$messages);
 
-    	if($validator->fails()){
-    		return response()->json([
-    			'error' => true,
-    			'message' => $validator->errors() 
-    		],200);
-    	}
+        	if($validator->fails()){
+        		return response()->json([
+        			'error' => true,
+        			'message' => $validator->errors() 
+        		],200);
+        	}
 
-    	else{
-    		$department = Department::find($id);
+        	else{
+        		$department = Department::find($id);
 
-    		$department->name = $request->input('name-edit');
-	    	$department->office_phone = $request->input('phone-edit');
-	    	
-    		$department->manager_id = $request->get('manager-edit');
-    		
-	    	$department->save();
-			
-			$department->manager = $department->getManager();
+        		$department->name = $request->input('name-edit');
+    	    	$department->office_phone = $request->input('phone-edit');
+    	    	
+        		$department->manager_id = $request->get('manager-edit');
+        		
+    	    	$department->save();
+    			
+    			$department->manager = $department->getManager();
 
-			return response()->json($department, 200);
-		}
-
-    	
-
+    			return response()->json($department, 200);
+    		}
+        }
     }
 
     public function addDepartment(Request $request){
-    	$rules = [
-    		'name' => 'required|min:6',
-    		'phone' => 'required',
-    	];
+        if(Auth::check()){
+        	$rules = [
+        		'name' => 'required|min:6',
+        		'phone' => 'required',
+        	];
 
-    	$messages = [
-    		'name.required' => 'Name is required',
-    		'name.min' => 'Name is least 6 characters',
-    		'phone' => 'Phone is required',
-    	];
-    	$validator = Validator::make($request->all(),$rules,$messages);
+        	$messages = [
+        		'name.required' => 'Name is required',
+        		'name.min' => 'Name is least 6 characters',
+        		'phone' => 'Phone is required',
+        	];
+        	$validator = Validator::make($request->all(),$rules,$messages);
 
-    	if($validator->fails()){
-    		return response()->json([
-    			'error' => true,
-    			'message' => $validator->errors() 
-    		],200);
-    	}
-    	else{
-    		$department = new Department;
-    		$department->name = $request->input('name');
-    		$department->office_phone = $request->input('phone');
-    		if($request->get('manager') != '0'){
-    			$department->manager_id = $request->get('manager');
+        	if($validator->fails()){
+        		return response()->json([
+        			'error' => true,
+        			'message' => $validator->errors() 
+        		],200);
+        	}
+        	else{
+        		$department = new Department;
+        		$department->name = $request->input('name');
+        		$department->office_phone = $request->input('phone');
+        		if($request->get('manager') != '0'){
+        			$department->manager_id = $request->get('manager');
+        		}
+        		
+        		$department->save();
+
+        		$department->manager = $department->getManager();
+        		//$employee = Employee::where('email', '=', $request->input('email'))->first();
+
+    			return response()->json($department, 200);
     		}
-    		
-    		$department->save();
-
-    		$department->manager = $department->getManager();
-    		//$employee = Employee::where('email', '=', $request->input('email'))->first();
-
-			return response()->json($department, 200);
-		}
+        }
     }
 
     public function deleteDepartment( $id, Request $request ) {
+        if(Auth::check()){
 	    $department = Department::findOrFail( $id );
 
 	    if ( $request->ajax() ) {
@@ -106,5 +107,6 @@ class DeptController extends Controller
 	        return response(['msg' => 'Hobby deleted', 'id' => $id, 'status' => 'success']);
 	    }
 	    return response(['msg' => 'Failed deleting the hobby', 'status' => 'failed']);
+        }
 	}
 }
