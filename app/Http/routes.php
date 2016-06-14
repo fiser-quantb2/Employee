@@ -39,6 +39,7 @@ Route::group(['middleware' => 'admin'],function(){
 		Route::get('employees', 'EmpController@index');
 		Route::post('employees/addEmployee', 'EmpController@addEmployee');
 		Route::post('employees/editEmployee/{id}', 'EmpController@editEmployee');
+		Route::delete('employees/deleteEmployee/{id}', 'EmpController@deleteEmployee');
 
 		//Route::get('employees/{id}', 'EmpController@infoEmployee');
 

@@ -46,7 +46,8 @@ class DeptController extends Controller
         		$department = Department::find($id);
 
         		$department->name = $request->input('name-edit');
-    	    	$department->office_phone = $request->input('phone-edit');
+    	    	
+                $department->office_phone = $request->input('phone-edit');
     	    	
         		$department->manager_id = $request->get('manager-edit');
         		

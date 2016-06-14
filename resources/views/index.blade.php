@@ -64,7 +64,7 @@
             </table>
             <!-- Day la modal edit -->
             <div id="modaledit" class="modal">
-	            <form id="form-edit" action="{{url('admin/employees/editEmployee')}}" method="post" enctype="multipart/form-data">
+	            <form id="form-edit" action="#" method="post" enctype="multipart/form-data">
 	            <input type="hidden" value="{{ Session::token() }}" name="_token">
 	                <div class="modal-header">
 	                    <h5 class="breadcrumbs-title">Edit Employee</h5>
@@ -127,7 +127,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn waves-effect waves-light red modal-action modal-close">Cancel</a>
-                    <a id="btn-confim-delete" href="#" style="margin-right:20px" class="btn waves-effect waves-light green modal-action modal-close">Confirm</a>
+                    <a href="#" style="margin-right:20px" id="btn-confim-delete" class="btn waves-effect waves-light green modal-action modal-close">Confirm</a>
                 </div>
             </div>
             <!-- Day la modal view -->
@@ -259,18 +259,25 @@ $(function(){
 	        };
 	        reader.readAsDataURL(this.files[0]);
 	    };
-
-	    document.getElementById("jimage2").onchange = function () {
-	        var reader = new FileReader();
-
-	        reader.onload = function (e) {
-	            document.getElementById("edit-profile-photo").src = e.target.result;
-	        };
-	        reader.readAsDataURL(this.files[0]);
-	    };
 	});
 
 	@foreach($employees as $employee)
+	$('#data-table-simple').on('click', '#view-{{$employee->id}}', function(event) {
+		/* Act on the event */
+		@if($employee->photo != null) 
+			$('#view-photo').attr('src', "{{url('getImage').'/'.$employee->photo}}");
+		@endif
+		$('#view-name').text('{{$employee->name}}');
+		$('#view-phone').text('{{$employee->cellphone}}');
+		$('#view-email').text('{{$employee->email}}');
+		$('#view-jobtitle').text('{{$employee->job_title}}');
+		$('#view-department').text('{{$employee->workFor()}}');
+		if(($("#modalview").data('bs.modal') || {}).isShown){
+
+		}
+		else $('#modalview').openModal();
+	});
+
 	$('#data-table-simple').on('click', '#delete-{{$employee->id}}', function(event) {
 		if(($("#modaldelete").data('bs.modal') || {}).isShown){
 
@@ -297,22 +304,6 @@ $(function(){
 		});
 	});
 
-	$('#data-table-simple').on('click', '#view-{{$employee->id}}', function(event) {
-		/* Act on the event */
-		@if($employee->photo != null) 
-			$('#view-photo').attr('src', "{{url('getImage').'/'.$employee->photo}}");
-		@endif
-		$('#view-name').text('{{$employee->name}}');
-		$('#view-phone').text('{{$employee->cellphone}}');
-		$('#view-email').text('{{$employee->email}}');
-		$('#view-jobtitle').text('{{$employee->job_title}}');
-		$('#view-department').text('{{$employee->workFor()}}');
-		if(($("#modalview").data('bs.modal') || {}).isShown){
-
-		}
-		else $('#modalview').openModal();
-	});
-
 	$('#data-table-simple').on('click', '#edit-{{$employee->id}}', function(event) {
 		/* Act on the event */
 		@if($employee->photo != null) 
@@ -332,7 +323,6 @@ $(function(){
 
 		$(document).on('submit', '#form-edit', function(event) {
 
-			event.preventDefault();
 			$.ajax({
 				url: "{{url('admin/employees/editEmployee')}}"+"/"+dataId,
 				method: "post",
@@ -366,6 +356,8 @@ $(function(){
 				console.log(data);
 			})
 		});
+
+		
 	});
 
 	@endforeach
