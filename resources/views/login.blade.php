@@ -141,9 +141,9 @@
                     Materialize.toast(data.message.errorlogin[0],4000);
                   }
                 } else if(data.message == 'success'){
-                  window.location.href = "http://localhost/employee/public/admin"
+                  window.location.href = "{{url('admin')}}"
                 } else {
-                  window.location.href = "http://localhost/employee/public/admin/changepass"
+                  window.location.href = "{{url('admin/changepass')}}"
                 }
               }
             });

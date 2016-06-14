@@ -18,11 +18,7 @@ class HomeController extends Controller
     }
 
     public function getIndex() {
-    	if(Auth::user()->active == 1){
-    		redirect ('admin');
-    	}else {
-    	return view('changepass');
-    	}
+    	return view('admin');
     }
     public function getChangepass(){
     	if(Auth::user()->active == 1){

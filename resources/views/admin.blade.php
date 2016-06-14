@@ -76,7 +76,7 @@
                   }
           });
           $.ajax({
-              'url' : 'admin/add',
+              'url' : "{{url('admin/add')}}",
               'data': {
                 'username' : $('#username').val(),
                 'email' : $('#email').val()

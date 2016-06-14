@@ -17,7 +17,10 @@
     <meta name="msapplication-TileColor" content="#00bcd4">
     <meta name="msapplication-TileImage" content="{{ URL::asset('images/favicon/mstile-144x144.png') }}">
     <!-- For Windows Phone -->
-
+    
+    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+    <link href="{{URL::asset('js/plugins/perfect-scrollbar/perfect-scrollbar.css')}}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{{URL::asset('js/plugins/data-tables/css/jquery.dataTables.min.css')}}" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- CORE CSS-->
   
     <link href="{{ URL::asset('css/materialize.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
@@ -25,12 +28,19 @@
     <!-- Custome CSS-->    
     <link href="{{ URL::asset('css/custom/custom.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
      <script type="text/javascript" src="{{ URL::asset('js/plugins/jquery-1.11.2.min.js') }}"></script>
+
+
+
     <!--materialize js-->
     <script type="text/javascript" src="{{ URL::asset('js/materialize.min.js') }}"></script>
     <!--prism-->
     <script type="text/javascript" src="{{ URL::asset('js/plugins/prism/prism.js') }}"></script>
     <!--scrollbar-->
     <script type="text/javascript" src="{{ URL::asset('js/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    
+    <!-- data-tables -->
+    <script type="text/javascript" src="{{URL::asset('js/plugins/data-tables/js/jquery.dataTables.min.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('js/plugins/data-tables/data-tables-script.js')}}"></script>
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="{{ URL::asset('js/plugins.min.js') }}"></script>
@@ -55,7 +65,7 @@
             <nav class="navbar-color">
                 <div class="nav-wrapper">
                     <ul class="left">                      
-                      <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="images/materialize-logo.png" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li>
+                      <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="{{ URL::asset('images/materialize-logo.png')}}" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li>
                     </ul>
                 </div>
             </nav>
@@ -77,7 +87,7 @@
                 <li class="user-details cyan darken-2">
                 <div class="row">
                     <div class="col col s4 m4 l4">
-                        <img src="{{ URL::asset('images/avatar.jpg') }}" alt="" class="circle responsive-img valign profile-image">
+                        <img src="{{ URL::asset('images/avatar.png') }}" alt="" class="circle responsive-img valign profile-image">
                     </div>
                     <div class="col col s8 m8 l8">
                         <ul id="profile-dropdown" class="dropdown-content">
@@ -94,7 +104,7 @@
                     </div>
                 </div>
                 </li>
-                <li class="bold"><a href="index.html" class="waves-effect waves-cyan"><i class="mdi-action-accessibility"></i> Employee</a>
+                <li class="bold"><a href="{{url('admin/employees')}}" class="waves-effect waves-cyan"><i class="mdi-action-accessibility"></i> Employee</a>
                 </li>
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
@@ -102,7 +112,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="bold"><a href="department.html" class="waves-effect waves-cyan"><i class="mdi-action-home"></i> Departments </a>
+                <li class="bold"><a href="{{url('admin/departments')}}" class="waves-effect waves-cyan"><i class="mdi-action-home"></i> Departments </a>
                 </li>
                 <li class="li-hover">
                     <div class="row">
