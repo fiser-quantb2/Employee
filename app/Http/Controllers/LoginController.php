@@ -40,7 +40,7 @@ class LoginController extends Controller
     		$password = $request->input('password');
     		if(Auth::attempt(['username'=>$username, 'password'=>$password],$request->has('remember'))){
                 if(Auth::user()->active == 1){
-                    return redirect('admin/add');
+                    return redirect('admin/employees');
                 }else{
                     return redirect('admin/changepass');
                 }

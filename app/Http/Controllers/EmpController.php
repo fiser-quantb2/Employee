@@ -26,7 +26,7 @@ class EmpController extends Controller
     }
 
     public function addEmployee(Request $request){
-    	if(Auth::check()){
+/*    	if(Auth::check()){*/
             $inputs = $request->all();
         	$rules = [
         		'name' => 'required|min:6',
@@ -79,11 +79,11 @@ class EmpController extends Controller
 
     			return response()->json($employee, 200);
     		}
-        }
+/*        }*/
     }
 
     public function editEmployee(Request $request, $id){
-        if(Auth::check()){
+/*        if(Auth::check()){*/
             $rules = [
                 'name-edit' => 'required|min:6',
                 'job-edit' => 'required',
@@ -143,7 +143,7 @@ class EmpController extends Controller
                 
                 return response()->json($employee, 200);
             }
-        }
+/*        }*/
     }
 
     public function getEmpImage($filename){

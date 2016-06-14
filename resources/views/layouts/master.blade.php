@@ -49,12 +49,13 @@
                         <i class="mdi-action-search"></i>
                         <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Employee Directory"/>
                     </div>
-                    <ul class="right hide-on-med-and-down">
+                    <ul class="right hide-on-med-and-down" style="margin-right:35px">
                         @if(!Auth::check())
                         <li>
                             <a href="{{url('login')}}" class="btn waves-effect waves-light teal">Login</a>
                         </li>
                         @endif
+                        
                     </ul>
                 </div>
             </nav>
@@ -73,7 +74,7 @@
                 <li class="user-details cyan darken-2">
                 <div class="row">
                     <div class="col col s4 m4 l4">
-                        <img src="{{ URL::asset('images/avatar.jpg') }}" alt="" class="circle responsive-img valign profile-image">
+                        <img src="{{ URL::asset('images/avatar.png') }}" alt="" class="circle responsive-img valign profile-image">
                     </div>
                     <div class="col col s8 m8 l8">
                         <ul id="profile-dropdown" class="dropdown-content">

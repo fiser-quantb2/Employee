@@ -3,14 +3,20 @@
 @section('title', 'Manage Employees')
 
 @section('content')
-
-
-<!-- Main -->
-
-<!--start container-->
+<div class="container">
+	<div class="row">
+	  <div class="col s12 m12 l12">
+	    <h5 class="breadcrumbs-title">List Employee</h5>
+	    <ol class="breadcrumbs">
+	        <li><a href="index.html">EmployeeDirectory</a></li>
+	        <li><a href="#">Employee</a></li>
+	        <li class="active">List Employee</li>
+	    </ol>
+	  </div>
+	</div>
+</div>
 <div class="container">
     <div class="row">
-        <h5 class="breadcrumbs-title">List Employee</h5>
         <div class="col s12 m12 l12">
             <table id="data-table-simple" class="responsive-table display" cellspacing="0">
                 <thead>
@@ -20,7 +26,9 @@
                         <th>Department</th>
                         <th>Job title</th>
                         <th>Email</th>
+                        @if(Auth::check())
                         <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
              
@@ -30,9 +38,9 @@
                         <td><a id="view-{{$employee->id}}" href="#modalview" >{{$employee->name}}</a></td>
                         <td>
                         	@if($employee->photo == null)
-                        	<img src="{{URL::asset('images/avatar.png')}}" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">
+                        	<img src="{{URL::asset('images/avatar.png')}}" alt="" style="max-width:60px;display:block;margin:0 auto;height:60px"class="circle responsive-img valign profile-image">
                         	@else
-                        	<img src="{{url('getImage').'/'.$employee->photo}}" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">
+                        	<img src="{{url('getImage').'/'.$employee->photo}}" alt="" style="max-width:60px;display:block;margin:0 auto;height:60px"class="circle responsive-img valign profile-image">
                         	@endif
                         </td>
                    
@@ -298,7 +306,7 @@ $(function(){
 				contentType: false
 			})
 			.done(function(data){
-				alert("Sửa employee thành công");
+				Materialize.toast("Edit employee successful !",4000);
 				console.log(data);
 				if(data.photo != null){
 					photo = '<img src="{{url('getImage')."/"}}'+data.photo+'" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">'
@@ -319,7 +327,7 @@ $(function(){
 				
 			})
 			.fail(function(data){
-				alert("Sửa thất bại");
+				Materialize.toast("Edit employee failed !",4000);
 				console.log(data);
 			})
 		});
@@ -340,7 +348,7 @@ $(function(){
 			contentType: false
 		})
 		.done(function(data){
-			alert("Thêm employee thành công");
+			Materialize.toast("Add employee successful !",4000);
 			console.log(data.workfor);
 			if(data.photo != null){
 				photo = '<img src="{{url('getImage')."/"}}'+data.photo+'" alt="" style="max-width:60px;display:block;margin:0 auto"class="circle responsive-img valign profile-image">'
@@ -360,7 +368,7 @@ $(function(){
 			
 		})
 		.fail(function(data){
-			alert("them that bai");
+			Materialize.toast("Add employee failed !",4000);
 			console.log(data);
 		})
 	});

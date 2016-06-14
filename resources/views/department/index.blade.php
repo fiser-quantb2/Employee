@@ -3,11 +3,20 @@
 @section('title', 'Manage Departments')
 
 @section('content')
-
-<!--start container-->
+<div class="container">
+	<div class="row">
+	  <div class="col s12 m12 l12">
+	    <h5 class="breadcrumbs-title">List Department</h5>
+	    <ol class="breadcrumbs">
+	        <li><a href="index.html">EmployeeDirectory</a></li>
+	        <li><a href="#">Department</a></li>
+	        <li class="active">List Department</li>
+	    </ol>
+	  </div>
+	</div>
+</div>
 <div class="container">
     <div class="row">
-        <h5 class="breadcrumbs-title">List Department</h5>
         <div class="col s12 m12 l12">
             <table id="data-table-simple" class="responsive-table display" cellspacing="0">
                 <thead>
@@ -15,7 +24,9 @@
                         <th>Name</th>
                         <th>Office Number</th>
                         <th>Manager</th>
+                        @if(Auth::check())
                         <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
              
@@ -25,6 +36,7 @@
                         <td><a id="view-{{$dept->id}}" href="#modalview" >{{$dept->name}}</a></td>
                         <td>{{$dept->office_phone}}</td>
                         <td>{{$dept->getManager()}}</td>
+                        @if(Auth::check())
                         <td>
                             <a id="delete-{{$dept->id}}" href="#modaldelete" style="margin-left:20px" class="waves-effect waves-circle waves-light btn-floating secondary-content" data-id="{{$dept->id}}">
                                 <i class="mdi-action-delete"></i>
@@ -33,6 +45,7 @@
                                 <i class="mdi-image-edit"></i>
                             </a>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -178,7 +191,7 @@ $(function(){
 			//dataType: "json",
 		})
 		.done(function(data){
-			alert("Thêm department thành công");
+			Materialize.toast("Add department successful !",4000);
 			$('#data-table-simple').dataTable().fnAddData([
 				'<a id="view-'+data.id+'" href="#modalview" >'+data.name+'</a>',
 				data.office_phone,
@@ -189,7 +202,7 @@ $(function(){
 		})
 
 		.fail(function(data){
-			console.log(data);
+			Materialize.toast("Add department failed !",4000);
 		})
 	});
 
@@ -231,7 +244,7 @@ $(function(){
 					method: 'delete',
 				})
 				.done(function(data){
-					alert('Xóa thành công');
+					Materialize.toast("Delete department successful !",4000);
 					$('#data-table-simple').dataTable().fnDeleteRow('#row-'+dataId);
 				})
 			});
@@ -260,7 +273,7 @@ $(function(){
 					//dataType: "json",
 				})
 				.done(function(data){
-					alert("Sửa department thành công");
+					Materialize.toast("Edit department successful !",4000);
 					console.log(data);
 					$('#data-table-simple').dataTable().fnUpdate([
 						'<a id="view-'+data.id+'" href="#modalview" >'+data.name+'</a>',
@@ -271,7 +284,7 @@ $(function(){
 				})
 
 				.fail(function(data){
-					console.log(data);
+					Materialize.toast("Edit employee failed !",4000);
 				})
 			});
 		});

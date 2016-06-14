@@ -16,3 +16,7 @@
 nav ul.right li:hover{
     background-color : rgba(0,0,0,0);
 }
+.modal-header{
+    font-style : italic;
+    padding-left: 20px;
+}

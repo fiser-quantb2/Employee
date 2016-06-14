@@ -26,7 +26,7 @@ class HomeController extends Controller
     }
     public function getLogout() {
 	   Auth::logout();
-	   return redirect(\URL::previous());
+	   return redirect('/');
 	}
     public function getContact(){
         return view('contact');
